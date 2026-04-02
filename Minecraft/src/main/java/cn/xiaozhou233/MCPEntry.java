@@ -1,7 +1,7 @@
 package cn.xiaozhou233;
 
 
-import cn.xiaozhou233.juiceloader.JuiceLoader;
+import cn.xiaozhou233.juiceagent.api.JuiceAgent;
 import cn.xiaozhou233.orangex.loader.Loader;
 
 import java.io.File;
@@ -21,8 +21,8 @@ public enum MCPEntry {
     public static void start() {
         System.out.println("======== Loader START ========");
 
-        System.load(new File("../../natives/libjuiceloader.dll").getAbsolutePath());
-        JuiceLoader.init();
+        System.load(new File("../../natives/libagent.dll").getAbsolutePath());
+        JuiceAgent.init();
 
         // Find client thread
         for (Thread t : Thread.getAllStackTraces().keySet()) {
@@ -42,7 +42,7 @@ public enum MCPEntry {
         // Load OrangeX
         File injectionFile = new File("../../out/tmp/OrangeX.jar");
         System.out.println("OrangeX Injection: " + injectionFile.getAbsolutePath());
-        JuiceLoader.AddToClassLoader(injectionFile.getAbsolutePath(), minecraftClassLoader);
+        JuiceAgent.addToClassLoader(injectionFile.getAbsolutePath(), minecraftClassLoader);
 
         try {
             Class<?> orangeXClass = Class.forName("cn.xiaozhou233.orangex.OrangeX", true, minecraftClassLoader);
